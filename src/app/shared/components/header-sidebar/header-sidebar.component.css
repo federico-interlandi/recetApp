@@ -1,0 +1,136 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  background-color: var(--color-2);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-4);
+  height: var(--header-height);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Asegura que el header esté por encima del contenido */
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo p {
+  margin: 0;
+  font-size: var(--font-size-3);
+  font-weight: 600;
+}
+
+.session-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.session-icon i {
+  font-size: 2rem;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--color-2);
+  box-shadow: var(--shadow-1);
+  border-radius: var(--border-radius-1);
+  padding: 0.5rem;
+}
+
+.session-icon:hover .dropdown {
+  display: block;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: var(--color-4);
+  font-size: var(--font-size-1);
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  text-decoration: underline;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: calc(100vh - var(--header-height));
+  background-color: var(--color-2);
+  color: var(--color-4);
+  padding: 1rem;
+  box-shadow: var(--shadow-1);
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.sidebar__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar__list_item {
+  margin-bottom: 1rem;
+}
+
+.sidebar__list_item_name {
+  color: var(--color-4);
+  text-decoration: none;
+  font-size: var(--font-size-2);
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-1);
+  transition: background-color var(--animation-1);
+}
+
+.sidebar__list_item_name:hover,
+.sidebar__list_item_name.active {
+  background-color: var(--color-1);
+  color: var(--color-4);
+  cursor: pointer;
+}
+
+.content {
+  margin-left: 250px;
+  padding: 1rem;
+  flex-grow: 1;
+  background-color: var(--color-3);
+  color: var(--color-4);
+  margin-top: var(--header-height);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .sidebar__list_item_name {
+    font-size: var(--font-size-1);
+  }
+
+  .content {
+    margin-left: 200px;
+  }
+}

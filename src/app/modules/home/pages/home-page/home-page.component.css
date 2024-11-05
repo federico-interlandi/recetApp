@@ -1,0 +1,11 @@
+.home-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-content {
+  margin-top: var(--header-height);
+  margin-left: var(--sidebar-width);
+  padding: 1rem;
+}
+
