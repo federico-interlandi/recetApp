@@ -1,25 +1,30 @@
 <div class="login-auth-page">
   <div class="login-auth-wrapper">
-      <h3>Para continuar, inicia sesión en RecetApp.</h3>
+      <h3 *ngIf="formType === 'login'">Para continuar, inicia sesión en RecetApp.</h3>
+      <h3 *ngIf="formType === 'register'">Crear una cuenta en RecetApp.</h3>
       <div class="separator"></div>
-      <form class="login-auth-form">
-          <div class="form-group">
-              <label for="email">Dirección de correo o nombre de usuario</label>
-              <input formControlName="email" type="text" placeholder="Dirección de correo o nombre de usuario" class="form-input">
-          </div>
-          <div class="form-group">
-              <label for="password">Contraseña</label>
-              <input formControlName="password" type="password" placeholder="Contraseña" class="form-input">
-          </div>
-          <div class="form-steps">
-              <a class="link" href="">¿Se te ha olvidado la contraseña?</a>
-          </div>
-          <div class="error-form">
-              Ocurrio un error con tu email o password
-          </div>
-          <div class="form-action">
-              <button  class="login social-btn">Iniciar sesión</button>
-          </div>
-      </form>
+        <form class="login-auth-form" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+            <div class="form-group py-1" *ngFor="let field of formFields">
+                <label [for]="field.formControlName">{{field.label}}</label>
+                <input [formControlName]="field.formControlName" [type]="field.type" [placeholder]="field.placeholder" (input)="validateField(field.formControlName, true)" (blur)="validateField(field.formControlName, false)" class="form-input">
+                <div *ngIf="errorMessages[field.formControlName]" class="text-danger">
+                  {{ errorMessages[field.formControlName] }}
+                </div>
+            </div>
+            <div class="form-steps" *ngIf="formType === 'login'">
+              ¿No tienes cuenta? <span (click)="changeFormType('register')" (keypress)="{}" class="fw-bold cursor-pointer">Registrate</span>
+            </div>
+            <div class="form-steps" *ngIf="formType === 'register'">
+              ¿Ya tienes cuenta? <span (click)="changeFormType('login')" (keypress)="{}" class="fw-bold cursor-pointer">Inicia sesión</span>
+            </div>
+            <div class="error-form">
+                Ocurrio un error con tu email o password
+            </div>
+            <div class="form-action">
+              <button type="submit" class="login social-btn"  [disabled]="authForm.invalid">
+                {{ formType === 'login' ? 'Iniciar sesión' : 'Crear cuenta' }}
+              </button>
+            </div>
+        </form>
   </div>
 </div>
