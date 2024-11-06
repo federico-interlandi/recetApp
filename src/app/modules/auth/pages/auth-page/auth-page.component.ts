@@ -1,29 +1,35 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserModel } from '@core/models/user.model';
+import { AuthService } from '@modules/auth/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-auth-page',
   templateUrl: './auth-page.component.html',
   styleUrl: './auth-page.component.css'
 })
-export class AuthPageComponent implements OnInit {
+export class AuthPageComponent implements OnInit, OnDestroy {
   @Input() formType: 'login' | 'register' = 'login';
 
   formFields: Array<any> = [];
   authForm: FormGroup = new FormGroup({});
   errorMessages: { [key: string]: string } = {};
+  observables$: Subscription[] = [];
+  errorSession: boolean = false;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private readonly asAuthService: AuthService, private readonly router: Router) { }
+
 
   ngOnInit(): void {
     this.initializeForm();
     this.setFormFields();
   }
 
-  initializeForm(): void {
+  initializeForm(initialValue?: string): void {
     this.authForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: [initialValue ? initialValue : '', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['']
     },
@@ -35,6 +41,10 @@ export class AuthPageComponent implements OnInit {
     if (this.formType === 'register') {
       this.authForm.get('confirmPassword')?.setValidators([Validators.required]);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.observables$.forEach((obs) => obs.unsubscribe());
   }
 
   setFormFields(): void {
@@ -87,7 +97,6 @@ export class AuthPageComponent implements OnInit {
       } else if (control.errors['minlength']) {
         return `La contraseña debe tener al menos ${control.errors['minlength'].requiredLength} caracteres.`;
       } else if (controlName === 'confirmPassword' && this.authForm.errors?.['mustMatch']) {
-        console.log('no coinciden')
         return 'Las contraseñas no coinciden.';
       }
     }
@@ -96,14 +105,30 @@ export class AuthPageComponent implements OnInit {
 
   onSubmit(): void {
     if (this.authForm.valid) {
-      // Handle form submission
+      if(this.formType === 'register'){
+        this.register();
+      }
     }
   }
 
-  changeFormType(type: 'login' | 'register'): void {
+  changeFormType(type: 'login' | 'register', initialValue?: string): void {
     this.formType = type;
-    this.initializeForm();
+    this.initializeForm(initialValue);
     this.setFormFields();
+  }
+
+  private register(): void {
+    const user : UserModel = {email: this.authForm.get('email')?.value, password: this.authForm.get('password')?.value};
+    const sub = this.asAuthService.register(user).subscribe({
+      next: (response: any) => {
+        this.errorSession = false;
+        this.changeFormType('login', response.email);
+      },
+      error: (error: any) => {
+        console.log('error from component: ', error);
+      }
+    });
+    this.observables$.push(sub);
   }
 
 
