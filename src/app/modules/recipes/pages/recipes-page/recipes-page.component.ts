@@ -17,7 +17,7 @@ export class RecipesPageComponent implements OnInit {
   }
 
   loadRecipes(): void {
-    this.recipeService.getGlobalRecipes$().subscribe({
+    this.recipeService.getRecipes$().subscribe({
       next: (data) => {
         this.recipes = data;
       },
@@ -30,5 +30,7 @@ export class RecipesPageComponent implements OnInit {
   toggleFavorite(recipe: any): void {
     recipe.isFavorite = !recipe.isFavorite;
     this.recipeService.updateRecipeInLocalStorage(recipe);
+    if(recipe.isFavorite) this.recipeService.addToFavorites(recipe);
+    else this.recipeService.removeFromFavorites(recipe);
   }
 }
