@@ -108,6 +108,9 @@ export class AuthPageComponent implements OnInit, OnDestroy {
       if(this.formType === 'register'){
         this.register();
       }
+      else if(this.formType === 'login'){
+        this.login();
+      }
     }
   }
 
@@ -121,7 +124,6 @@ export class AuthPageComponent implements OnInit, OnDestroy {
     const user : UserModel = {email: this.authForm.get('email')?.value, password: this.authForm.get('password')?.value};
     const sub = this.asAuthService.register(user).subscribe({
       next: (response: any) => {
-        this.errorSession = false;
         this.changeFormType('login', response.email);
       },
       error: (error: any) => {
@@ -131,7 +133,20 @@ export class AuthPageComponent implements OnInit, OnDestroy {
     this.observables$.push(sub);
   }
 
-
+  private login(): void {
+    const user : UserModel = {email: this.authForm.get('email')?.value, password: this.authForm.get('password')?.value};
+    const sub = this.asAuthService.logIn(user).subscribe({
+      next: () => {
+        this.errorSession = false;
+        this.router.navigate(['/', 'recipes']);
+      },
+      error: (error: any) => {
+        this.errorSession = true;
+        console.log('error from component: ', error);
+      }
+    });
+    this.observables$.push(sub);
+  }
 
 }
 

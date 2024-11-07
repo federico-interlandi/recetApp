@@ -8,11 +8,14 @@ import { CookieService } from 'ngx-cookie-service';
 import { InjectSessionInterceptor } from '@core/interceptors/inject-session.interceptor';
 import { LoaderInterceptor } from '@core/interceptors/loader.interceptor';
 import { LoaderComponent } from '@shared/components/loader/loader.component';
+import { ErrorInterceptor } from '@core/interceptors/error.interceptor';
+import { ErrorNotificationComponent } from '@shared/components/error/error.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoaderComponent
+    LoaderComponent,
+    ErrorNotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +32,11 @@ import { LoaderComponent } from '@shared/components/loader/loader.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true
     }
   ],

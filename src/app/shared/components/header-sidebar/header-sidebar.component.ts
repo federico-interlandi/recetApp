@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-header-sidebar',
@@ -10,7 +11,7 @@ export class HeaderSideBarComponent implements OnInit {
 
   public mainMenu : Array<any> = [];
 
-  constructor(private readonly router: Router) { }
+  constructor(private readonly router: Router, private asAuthService: AuthService) { }
 
   ngOnInit() {
     this.mainMenu = [
@@ -23,5 +24,10 @@ export class HeaderSideBarComponent implements OnInit {
         router: ['/', 'favorites']
       }
     ];
+  }
+
+  logOut(): void {
+    this.asAuthService.logOut();
+    this.router.navigate(['/auth']);
   }
 }

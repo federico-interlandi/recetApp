@@ -17,9 +17,6 @@
             <div class="form-steps" *ngIf="formType === 'register'">
               ¿Ya tienes cuenta? <span (click)="changeFormType('login')" (keypress)="{}" class="fw-bold cursor-pointer">Inicia sesión</span>
             </div>
-            <div class="error-form">
-                Ocurrio un error con tu email o password
-            </div>
             <div class="form-action">
               <button type="submit" class="login social-btn"  [disabled]="authForm.invalid">
                 {{ formType === 'login' ? 'Iniciar sesión' : 'Crear cuenta' }}
