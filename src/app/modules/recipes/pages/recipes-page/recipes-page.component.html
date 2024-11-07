@@ -1,1 +1,13 @@
-<p>recipes-page works!</p>
+<div class="recipes-container">
+  <div class="recipe-card" *ngFor="let recipe of recipes">
+    <button (click)="toggleFavorite(recipe)" class="favorite-button">
+      <i [ngClass]="recipe.isFavorite ? 'fas fa-star' : 'far fa-star'"></i>
+    </button>
+    <div class="recipe-image">
+      <img appImgBroken [src]="recipe.imagePath" alt="{{ recipe.name }}">
+    </div>
+    <div class="recipe-content">
+      <h3>{{ recipe.name }}</h3>
+    </div>
+  </div>
+</div>
