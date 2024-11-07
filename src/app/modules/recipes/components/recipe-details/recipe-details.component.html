@@ -1,0 +1,21 @@
+<div class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="onClose()">&times;</span>
+    <h2>Detalle de la Receta</h2>
+    <form [formGroup]="recipeForm" (ngSubmit)="onSave()">
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input id="name" formControlName="name" type="text" [ngClass]="{'modified': recipeForm.get('name')?.dirty}">
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <textarea id="description" formControlName="description" [ngClass]="{'modified': recipeForm.get('description')?.dirty}"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="imagePath">URL de la Imagen</label>
+        <textarea id="imagePath" formControlName="imagePath" type="texta" [ngClass]="{'modified': recipeForm.get('imagePath')?.dirty}"></textarea>
+      </div>
+      <button type="submit" [disabled]="recipeForm.invalid">Guardar</button>
+    </form>
+  </div>
+</div>

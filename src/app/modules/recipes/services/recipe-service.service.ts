@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { RecipeModel } from '@core/models/recipe.model';
 import { ErrorNotificationService } from '@shared/services/error-notification.service';
@@ -18,8 +18,8 @@ export class RecipeService {
 
   constructor(private http: HttpClient, private errorNotificationService: ErrorNotificationService) { }
 
-  getRecipes$(): Observable<RecipeModel[]> {
-    if (this.recipesSubject.value.length > 0) {
+  getRecipes$(refresh?: boolean): Observable<RecipeModel[]> {
+    if (this.recipesSubject.value.length > 0 && !refresh) {
       return this.recipes$;
     } else {
       return this.http.get<RecipeModel[]>(`${this.URL}/recipes/get`).pipe(
@@ -34,6 +34,25 @@ export class RecipeService {
       );
     }
   }
+
+  updateRecipe$(id: string, recipe: RecipeModel): Observable<RecipeModel> {
+    return this.http.put<RecipeModel>(`${this.URL}/recipes/edit/${id}`, recipe).pipe(
+      catchError((error: any) => {
+        this.errorNotificationService.showError('Error al actualizar receta: ' + error.message);
+        return of({} as RecipeModel);
+      })
+    );
+  }
+
+  removeRecipe$(id: string): Observable<RecipeModel> {
+    return this.http.delete<RecipeModel>(`${this.URL}/recipes/delete/${id}`).pipe(
+      catchError((error: any) => {
+        this.errorNotificationService.showError('Error al eliminar receta: ' + error.message);
+        return of({} as RecipeModel);
+      })
+    );
+  }
+
 
   updateRecipeInLocalStorage(updatedRecipe: RecipeModel): void {
     const recipes = this.recipesSubject.value;

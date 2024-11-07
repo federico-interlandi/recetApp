@@ -8,6 +8,16 @@
     </div>
     <div class="recipe-content">
       <h3>{{ recipe.name }}</h3>
+      <div class="recipe-actions">
+        <button (click)="openRecipeDetail(recipe)" class="edit-button">
+          <i class="fas fa-pencil-alt"></i>
+        </button>
+        <button (click)="removeRecipe(recipe._id!)" class="delete-button">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
     </div>
   </div>
 </div>
+
+<app-recipe-detail *ngIf="selectedRecipe" [recipe]="selectedRecipe" (close)="closeRecipeDetail()" (save)="updateRecipe($event)"></app-recipe-detail>

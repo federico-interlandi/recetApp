@@ -16,6 +16,10 @@
   --animation-1: 200ms;
   --header-height: 4rem;
   --sidebar-width: 9rem;
+  --header-sidebar-z: 10;
+  --loader-z: 1000;
+  --error-z: 1000;
+  --modal-z: 100;
 }
 
 html,

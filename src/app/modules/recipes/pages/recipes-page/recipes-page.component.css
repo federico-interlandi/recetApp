@@ -51,12 +51,26 @@
   font-weight: bold;
 }
 
-.favorite-button {
+.recipe-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 8px;
+}
+
+.favorite-button,
+.edit-button,
+.delete-button {
   background: none;
   border: none;
   cursor: pointer;
   font-size: 1.5em;
   color: #ffcc00;
+}
+
+.edit-button:hover,
+.delete-button:hover{
+  background-color: rgba(99, 96, 96, 0.1);
+  border-radius: 70%;
 }
 
 .favorite-button .fa-star {
@@ -65,5 +79,13 @@
 
 .favorite-button .fa-star.far {
   color: #ccc;
+}
+
+.edit-button .fa-pencil-alt {
+  color: var(--color-3);
+}
+
+.delete-button .fa-trash {
+  color: red; /* Usa un color adecuado para el icono de eliminación */
 }
 
