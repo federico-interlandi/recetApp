@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ImgBrokenDirective } from './directives/img-broken.directive';
 import { WarningModalComponent } from './components/warning-modal/warning-modal.component';
+import { SearcherComponent } from './components/searcher/searcher.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -12,16 +14,19 @@ import { WarningModalComponent } from './components/warning-modal/warning-modal.
   declarations: [
     HeaderSideBarComponent,
     ImgBrokenDirective,
-    WarningModalComponent
+    WarningModalComponent,
+    SearcherComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   exports: [
     HeaderSideBarComponent,
     ImgBrokenDirective,
-    WarningModalComponent
+    WarningModalComponent,
+    SearcherComponent
   ]
 })
 export class SharedModule { }

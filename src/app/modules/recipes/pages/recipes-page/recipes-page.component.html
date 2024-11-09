@@ -1,22 +1,31 @@
-<!-- <router-outlet name="recipeDetails"></router-outlet> -->
-<button class="btn btn-primary btn new-recipe-button ml-3" (click)="createNewRecipe()">
-  <i class="fas fa-plus"></i>Nueva Receta
-</button>
-<div class="recipes-container">
-  <div class="recipe-card" *ngFor="let recipe of recipes">
-    <button (click)="toggleFavorite(recipe)" class="favorite-button">
-      <i [ngClass]="recipe.isFavorite ? 'fas fa-star' : 'far fa-star'"></i>
-    </button>
-    <div class="recipe-image" (click)="openRecipeDetail(recipe)">
-      <img appImgBroken [src]="recipe.imagePath" alt="{{ recipe.name }}">
-    </div>
-    <div class="recipe-content">
-      <h3>{{ recipe.name }}</h3>
-      <div class="recipe-actions">
-        <app-edit-delete-button [selectedRecipe]="recipe"></app-edit-delete-button>
+<div class="header-actions">
+  <button class="btn btn-primary new-recipe-button" (click)="createNewRecipe()">
+    <i class="fas fa-plus"></i> Nueva Receta
+  </button>
+  <app-searcher class="search-bar" (callbackData)="receiveSearchTerm($event)"></app-searcher>
+</div>
+<div>
+  <ng-container *ngIf="searchTerm">
+    <h3 *ngIf="recipesResult.length > 0; else noResults" class="search-result">Resultados para {{searchTerm}}</h3>
+  </ng-container>
+  <ng-template #noResults>
+    <h3 class="search-result">No hay resultados para {{searchTerm}}</h3>
+  </ng-template>
+  <div class="recipes-container">
+    <div class="recipe-card" *ngFor="let recipe of (searchTerm ? recipesResult : recipes)">
+      <button (click)="toggleFavorite(recipe)" class="favorite-button">
+        <i [ngClass]="recipe.isFavorite ? 'fas fa-star' : 'far fa-star'"></i>
+      </button>
+      <div class="recipe-image" (click)="openRecipeDetail(recipe)">
+        <img appImgBroken [src]="recipe.imagePath" alt="{{ recipe.name }}">
+      </div>
+      <div class="recipe-content">
+        <h3>{{ recipe.name }}</h3>
+        <div class="recipe-actions">
+          <app-edit-delete-button [selectedRecipe]="recipe"></app-edit-delete-button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
 <app-recipe-form *ngIf="(recipeService.openForm$ | async)" [recipe]="(recipeService.selectedRecipe$ | async)" (close)="recipeService.closeForm()"></app-recipe-form>

@@ -1,3 +1,11 @@
+.header-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 45%;
+}
+
 .recipes-container {
   display: flex;
   flex-wrap: wrap;
@@ -87,8 +95,7 @@
   border-radius: 0.25em;
   cursor: pointer;
   transition: background-color 0.3s;
-  gap: 16px;
-  margin-bottom: 16px;
+  margin-right: 2rem;
 }
 
 .new-recipe-button:hover {
@@ -97,5 +104,10 @@
 
 .new-recipe-button i {
   font-size: 1.25em; /* Tamaño del icono */
+}
+
+.search-result {
+  font-style: italic;
+  font-size: 0.9rem;
 }
 

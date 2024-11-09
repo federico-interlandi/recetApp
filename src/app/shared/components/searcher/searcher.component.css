@@ -1,0 +1,19 @@
+.search-bar {
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar input {
+  background-color: black;
+  color: white;
+  border: 1px solid var(--color-1);
+  border-radius: 4px;
+  padding: 0.5rem 2rem 0.5rem 1rem;
+  font-size: 1rem;
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+}
+
+.search-bar input::placeholder {
+  color: white;
+}

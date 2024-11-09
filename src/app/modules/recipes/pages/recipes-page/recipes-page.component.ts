@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { RecipeModel } from '@core/models/recipe.model';
 import { RecipeService } from '@modules/recipes/services/recipe-service.service';
 import { LocalStorageService } from '@shared/services/local-storage.service';
-import { Subscription } from 'rxjs';
+import { SearchService } from '@shared/services/search.service';
+import { Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipes-page',
@@ -15,8 +16,15 @@ export class RecipesPageComponent implements OnInit {
   recipeSuscription: Subscription = new Subscription();
   favorites: RecipeModel[] = [];
   favoritesSuscription: Subscription = new Subscription();
+  recipesResult: RecipeModel[] = [];
+  searchTerm: string = '';
 
-  constructor(readonly recipeService: RecipeService, private readonly router: Router, private localStorageService: LocalStorageService) { }
+  constructor(
+    readonly recipeService: RecipeService,
+    private readonly router: Router,
+    private localStorageService: LocalStorageService,
+    private searchService: SearchService
+  ) { }
 
   ngOnInit(): void {
     this.recipeSuscription = this.localStorageService.getRecipeObservable().subscribe(
@@ -68,5 +76,16 @@ export class RecipesPageComponent implements OnInit {
 
   createNewRecipe(): void {
     this.recipeService.openForm(null);
+  }
+
+  receiveSearchTerm(event: string): void {
+    if(event.length < 3){
+      this.searchTerm = '';
+      this.recipesResult = [];
+    }
+    else {
+      this.searchTerm = event;
+      this.recipesResult = this.searchService.searchRecipes(event, this.recipes);
+    }
   }
 }
