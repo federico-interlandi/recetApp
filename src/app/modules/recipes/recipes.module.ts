@@ -22,6 +22,9 @@ import { EditDeleteButtonsComponent } from './components/edit-delete-buttons/edi
     RecipesRoutingModule,
     SharedModule,
     ReactiveFormsModule
+  ],
+  exports: [
+    EditDeleteButtonsComponent
   ]
 })
 export class RecipesModule { }

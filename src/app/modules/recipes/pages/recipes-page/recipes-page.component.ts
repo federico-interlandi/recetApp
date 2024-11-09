@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { RecipeModel } from '@core/models/recipe.model';
 import { RecipeService } from '@modules/recipes/services/recipe-service.service';
@@ -14,8 +14,6 @@ import { Observable, of, Subscription } from 'rxjs';
 export class RecipesPageComponent implements OnInit {
   recipes: RecipeModel[] = [];
   recipeSuscription: Subscription = new Subscription();
-  favorites: RecipeModel[] = [];
-  favoritesSuscription: Subscription = new Subscription();
   recipesResult: RecipeModel[] = [];
   searchTerm: string = '';
 

@@ -1,1 +1,13 @@
-<p>favorites-page works!</p>
+<div class="favorites-container">
+  <div class="favorite-card" *ngFor="let favorite of favorites">
+    <button (click)="removeFromFavorites(favorite)" class="remove-favorite-button">
+      Remover de favoritos
+    </button>
+    <div class="favorite-image" (click)="openRecipeDetail(favorite)">
+      <img appImgBroken [src]="favorite.imagePath" alt="{{ favorite.name }}">
+    </div>
+    <div class="favorite-content">
+      <h3>{{ favorite.name }}</h3>
+    </div>
+  </div>
+</div>

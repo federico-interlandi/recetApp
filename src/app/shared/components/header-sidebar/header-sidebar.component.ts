@@ -17,7 +17,7 @@ export class HeaderSideBarComponent implements OnInit {
     this.mainMenu = [
       {
         name: 'Recetas',
-        router: ['/']
+        router: ['/', 'recipes']
       },
       {
         name: 'Favoritos',

@@ -26,6 +26,7 @@ export class LocalStorageService {
     const updatedRecipes = this.getDataFromLocalStorage('recipes');
     this.recipesSubject.next(updatedRecipes);
     const updatedFavorites = this.getDataFromLocalStorage('favorites');
+    console.log('updatedFavorites', updatedFavorites);
     this.favoriteSubject.next(updatedFavorites);
 
   }
@@ -40,6 +41,10 @@ export class LocalStorageService {
 
   updateData(data: any, key:string) {
     localStorage.setItem(key, JSON.stringify(data));
-    this.recipesSubject.next(data);
+    if (key === 'recipes') {
+      this.recipesSubject.next(data);
+    } else if (key === 'favorites') {
+      this.favoriteSubject.next(data);
+    }
   }
 }

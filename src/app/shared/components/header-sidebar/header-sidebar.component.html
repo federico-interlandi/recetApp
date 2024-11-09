@@ -14,8 +14,8 @@
   </header>
   <div class="sidebar">
       <ul class="sidebar__list">
-        <li class="sidebar__list_item" *ngFor="let item of mainMenu" [routerLink]="item.router">
-          <span class="sidebar__list_item_name">{{item.name}}</span>
+        <li class="sidebar__list_item" *ngFor="let item of mainMenu"  >
+          <span class="sidebar__list_item_name" [routerLink]="item.router" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{item.name}}</span>
         </li>
       </ul>
   </div>
