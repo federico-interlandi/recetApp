@@ -1,0 +1,23 @@
+<div *ngIf="recipe">
+  <div class="recipe-details-container" *ngIf="true">
+    <div class="recipe-image">
+      <img appImgBroken [src]="recipe.imagePath" alt="{{ recipe.name }}">
+    </div>
+    <div class="recipe-content">
+      <h1>{{ recipe.name }}</h1>
+      <p class="description">{{ recipe.description }}</p>
+      <div *ngIf="recipe.ingredients && recipe.ingredients.length > 0" class="ingredients">
+        <h2>Ingredientes</h2>
+        <ul>
+          <li *ngFor="let ingredient of recipe.ingredients">
+            <h3>{{ ingredient.name }} - {{ ingredient.amount }}</h3>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <app-edit-delete-button [selectedRecipe]="recipe" [inDetailsPage]="true"></app-edit-delete-button>
+  </div>
+  <div>
+    <app-recipe-form *ngIf="(recipeService.openForm$ | async)" [recipe]="(recipeService.selectedRecipe$ | async)" (close)="recipeService.closeForm()"></app-recipe-form>
+  </div>
+</div>

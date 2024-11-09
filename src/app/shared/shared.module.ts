@@ -4,13 +4,15 @@ import { HeaderSideBarComponent } from './components/header-sidebar/header-sideb
 import { RouterModule } from '@angular/router';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ImgBrokenDirective } from './directives/img-broken.directive';
+import { WarningModalComponent } from './components/warning-modal/warning-modal.component';
 
 
 
 @NgModule({
   declarations: [
     HeaderSideBarComponent,
-    ImgBrokenDirective
+    ImgBrokenDirective,
+    WarningModalComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { ImgBrokenDirective } from './directives/img-broken.directive';
   ],
   exports: [
     HeaderSideBarComponent,
-    ImgBrokenDirective
+    ImgBrokenDirective,
+    WarningModalComponent
   ]
 })
 export class SharedModule { }

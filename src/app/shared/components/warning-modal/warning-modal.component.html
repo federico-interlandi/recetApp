@@ -1,0 +1,9 @@
+<div *ngIf="showModal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="onCancelAction()">&times;</span>
+    <h2>Advertencia</h2>
+    <p>{{ warningMessage }}</p>
+    <button class="btn btn-danger" (click)="onConfirmAction()">Borrar</button>
+    <button class="btn btn-secondary" (click)="onCancelAction()">Cancelar</button>
+  </div>
+</div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecipeDetailsComponent } from './recipe-details.component';
+import { WarningModalComponent } from './warning-modal.component';
 
-describe('RecipeDetailsComponent', () => {
-  let component: RecipeDetailsComponent;
-  let fixture: ComponentFixture<RecipeDetailsComponent>;
+describe('WarningModalComponent', () => {
+  let component: WarningModalComponent;
+  let fixture: ComponentFixture<WarningModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecipeDetailsComponent]
+      declarations: [WarningModalComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RecipeDetailsComponent);
+    fixture = TestBed.createComponent(WarningModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -10,6 +10,7 @@ import { LoaderInterceptor } from '@core/interceptors/loader.interceptor';
 import { LoaderComponent } from '@shared/components/loader/loader.component';
 import { ErrorInterceptor } from '@core/interceptors/error.interceptor';
 import { ErrorNotificationComponent } from '@shared/components/error/error.component';
+import { AuthInterceptorService } from '@core/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,11 @@ import { ErrorNotificationComponent } from '@shared/components/error/error.compo
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
       multi: true
     }
   ],

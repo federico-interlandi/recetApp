@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     component: FavoritesPageComponent,
-    outlet: "child"
+    // outlet: "child"
   }
 ];
 

@@ -41,3 +41,27 @@ button {
 button:disabled {
   opacity: .5;
 }
+
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2c2c2c;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #555 #2c2c2c;
+}

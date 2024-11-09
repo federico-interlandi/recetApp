@@ -1,0 +1,9 @@
+<div *ngIf="selectedRecipe">
+  <button [ngClass]="inDetailsPage ? 'edit-button' : 'edit-button-alt' " (click)="openRecipeForm(selectedRecipe)">
+    <i [ngClass]="inDetailsPage ? 'fas fa-pencil' : 'fas fa-pencil-alt'"></i>
+  </button>
+  <button  [ngClass]="inDetailsPage ? 'delete-button' : 'delete-button-alt' "
+  (click)="openDeleteWarning()">
+    <i class="fas fa-trash"></i>
+  </button>
+</div>

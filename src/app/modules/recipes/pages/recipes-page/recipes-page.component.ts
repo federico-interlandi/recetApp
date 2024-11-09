@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RecipeModel } from '@core/models/recipe.model';
 import { RecipeService } from '@modules/recipes/services/recipe-service.service';
+import { LocalStorageService } from '@shared/services/local-storage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipes-page',
@@ -9,62 +12,61 @@ import { RecipeService } from '@modules/recipes/services/recipe-service.service'
 })
 export class RecipesPageComponent implements OnInit {
   recipes: RecipeModel[] = [];
-  selectedRecipe: RecipeModel | null = null;
+  recipeSuscription: Subscription = new Subscription();
+  favorites: RecipeModel[] = [];
+  favoritesSuscription: Subscription = new Subscription();
 
-  constructor(private recipeService: RecipeService) { }
+  constructor(readonly recipeService: RecipeService, private readonly router: Router, private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
-    this.loadRecipes();
+    this.recipeSuscription = this.localStorageService.getRecipeObservable().subscribe(
+      (newData) => {
+        this.recipes = newData;
+      }
+    );
   }
 
-  loadRecipes(refresh? :boolean): void {
-    this.recipeService.getRecipes$(refresh).subscribe({
-      next: (data) => {
-        this.recipes = data;
-      },
-      error: (err) => {
-        console.error('Error al cargar recetas:', err);
-      }
-    });
+  ngOnDestroy() {
+    if (this.recipeSuscription) {
+      this.recipeSuscription.unsubscribe();
+    }
   }
+
 
   toggleFavorite(recipe: any): void {
     recipe.isFavorite = !recipe.isFavorite;
-    this.recipeService.updateRecipeInLocalStorage(recipe);
-    if(recipe.isFavorite) this.recipeService.addToFavorites(recipe);
-    else this.recipeService.removeFromFavorites(recipe);
+    if(recipe.isFavorite){
+      console.log('agregando a favoritos!')
+      this.localStorageService.updateData(
+        this.localStorageService.getDataFromLocalStorage('favorites').concat(recipe),
+        'favorites'
+      );
+      this.localStorageService.updateData(
+        this.localStorageService.getDataFromLocalStorage('recipes').map((r: any) => r._id === recipe._id ? recipe : r),
+        'recipes'
+      );
+    }
+    else{
+      this.localStorageService.updateData(
+        this.localStorageService.getDataFromLocalStorage('favorites').filter((r: any) => r._id !== recipe._id),
+        'favorites'
+      );
+      this.localStorageService.updateData(
+        this.localStorageService.getDataFromLocalStorage('recipes').map((r: any) => r._id === recipe._id ? recipe : r),
+        'recipes'
+      );
+    }
   }
 
   openRecipeDetail(recipe: RecipeModel): void {
-    this.selectedRecipe = recipe;
+    this.router.navigate(['recipes','recipe-details', recipe._id]);
   }
 
-  closeRecipeDetail(): void {
-    this.selectedRecipe = null;
+  openRecipeForm(recipe: RecipeModel): void {
+    this.recipeService.openForm(recipe);
   }
 
-  updateRecipe(updatedRecipe: RecipeModel): void {
-    // console.log(updatedRecipe);
-    if(updatedRecipe._id) this.recipeService.updateRecipe$(updatedRecipe._id, updatedRecipe).subscribe({
-      next: (data) => {
-        this.loadRecipes(true);
-        this.closeRecipeDetail();
-      },
-      error: (err) => {
-        console.error('Error al actualizar receta:', err);
-      }
-     })
-  }
-
-  removeRecipe(id: string): void {
-    this.recipeService.removeRecipe$(id).subscribe({
-      next: (data) => {
-        this.loadRecipes(true);
-        this.closeRecipeDetail();
-      },
-      error: (err) => {
-        console.error('Error al eliminar receta:', err);
-      }
-    });
+  createNewRecipe(): void {
+    this.recipeService.openForm(null);
   }
 }

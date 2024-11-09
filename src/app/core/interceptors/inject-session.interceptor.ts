@@ -28,7 +28,6 @@ export class InjectSessionInterceptor implements HttpInterceptor {
       return next.handle(newRequest);
 
     } catch (e) {
-      console.log('🔴🔴🔴 Ojito error', e)
       return next.handle(request);
     }
   }
