@@ -16,7 +16,8 @@ export class AuthInterceptorService implements HttpInterceptor {
         if (error.status >= 400 && error.status < 500) {
 
           this.cookieService.delete('token')
-          localStorage.clear();
+          localStorage.removeItem('favorites');
+          localStorage.removeItem('recipes')
           // this.router.navigate(['/auth']);
 
           window.location.href = '/auth';

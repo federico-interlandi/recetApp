@@ -38,5 +38,7 @@ export class AuthService {
 
   logOut(): void {
     this.cookieService?.delete('token');
+    localStorage.removeItem('favorites');
+    localStorage.removeItem('recipes')
   }
 }

@@ -8,7 +8,8 @@ export const sessionGuard: CanActivateFn = (route, state) => {
   try {
     const tokenExist = cookieService.check('token')
     if(!tokenExist) {
-      localStorage.clear();
+      localStorage.removeItem('favorites');
+      localStorage.removeItem('recipes')
       router.navigate(['/', 'auth']);
     }
     return tokenExist;
