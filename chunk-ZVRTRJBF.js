@@ -1,1 +1,0 @@
-import{Da as o,Ha as r,v as e}from"./chunk-T663EOGS.js";var k=(i,a)=>{let n=e(r),c=e(o);try{let t=n.check("token");return t||c.navigate(["/","auth"]),t}catch(t){return console.log("Error!! ",t.message),!1}};export{k as a};
