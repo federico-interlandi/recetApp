@@ -30,3 +30,4 @@ jobs:
           branch: gh-pages
           folder: dist/recetas/browser
           clean: true
+          token: ${{ secrets.GITHUB_TOKEN }}
