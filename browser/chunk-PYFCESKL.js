@@ -1,0 +1,1 @@
+import{Ca as o,Ga as r,v as e}from"./chunk-DT3J2NFD.js";var k=(i,a)=>{let n=e(r),c=e(o);try{let t=n.check("token");return t||c.navigate(["/","auth"]),t}catch(t){return console.log("Error!! ",t.message),!1}};export{k as a};
