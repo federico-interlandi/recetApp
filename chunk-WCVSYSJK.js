@@ -1,1 +1,0 @@
-import{b as a}from"./chunk-2JKLZVYK.js";import"./chunk-CB543V62.js";import"./chunk-WGDVPG6T.js";import"./chunk-M55BKKZZ.js";import"./chunk-PYFCESKL.js";import"./chunk-NQKAWJQU.js";import"./chunk-DT3J2NFD.js";export{a as RecipesModule};
