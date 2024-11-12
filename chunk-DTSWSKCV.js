@@ -1,0 +1,1 @@
+import{Da as t,Ha as r,v as o}from"./chunk-T663EOGS.js";var u=(n,i)=>{let a=o(r),c=o(t);try{let e=a.check("token");return e||(localStorage.removeItem("favorites"),localStorage.removeItem("recipes"),c.navigate(["/","auth"])),e}catch(e){return console.log("Error!! ",e.message),!1}};export{u as a};
